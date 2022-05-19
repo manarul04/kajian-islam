@@ -27,7 +27,7 @@ if (isset($_SESSION['username'])) {
    
 }else{
   echo '<script>alert("Login Terlebih Dahulu.")</script>';
-  echo '<meta http-equiv="refresh" content="0;url=https://app.betamedia.id"/> ';
+  echo '<meta http-equiv="refresh" content="0;url=../login"/> ';
 }
 ?>
 <!DOCTYPE html>
