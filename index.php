@@ -7,11 +7,14 @@
       case 'home';
         include 'halaman/home.php';
       break;
-      case 'kajian';
-        include 'halaman/kajian.php';
+      case 'about';
+        include 'halaman/about.php';
       break;
-      case 'admin';
-        include 'include/admin/admin.php';
+      case 'profil';
+        include 'halaman/profil.php';
+      break;
+      case 'detail';
+        header('Location: halaman/detail.php');
       break;
     }
   }else{

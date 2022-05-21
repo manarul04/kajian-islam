@@ -1,9 +1,34 @@
+<?php
+
+include "config/koneksi.php";
+error_reporting(0);
+//  error_reporting(E_ALL);
+session_start(['cookie_lifetime' => 86400,]);
+
+if (isset($_SESSION['username'])) {
+  // echo '<meta content="0; url=profil/" http-equiv="refresh">';
+  $username = $_SESSION['username'];
+  
+    $query = mysqli_query($connect, "SELECT * FROM v_user WHERE username='$username'");
+    $data = mysqli_fetch_array($query);
+    $id = $data['id_pengguna'];
+    $level = $data['level'];
+    $nama = $data['nama'];
+    $alamat = $data['alamat'];
+    $email = $data['email'];
+    $foto = $data['foto'];
+   $loginhdn="hidden";
+}else{
+    $loginhdn="";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catalog-Z Bootstrap 5.0 HTML Template</title>
+    <title>Kalam - Kajian Islam</title>
+    <link href="admin/img/logo/logo.png" rel="icon">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="fontawesome/css/all.min.css">
     <link rel="stylesheet" href="css/templatemo-style.css">
@@ -36,27 +61,39 @@ https://templatemo.com/tm-556-catalog-z
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link nav-link-1 active" aria-current="page" href="index.html">Home</a>
+                    <a class="nav-link nav-link-1 <?php if($_GET['halaman']=="home"){echo 'active';}?>" aria-current="page" href="home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-2" href="videos.html">Profil</a>
+                    <a class="nav-link nav-link-1 <?php if($_GET['halaman']=="about"){echo 'active';}?>" href="about">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-3" href="about.html">About</a>
+                    <a class="nav-link nav-link-1 <?php if($_GET['halaman']=="profil"){echo 'active';}?>" href="profil">Profil</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-4" href="login">Login</a>
-                </li>
+                
+                <?php if($loginhdn!='hidden'){
+                    ?>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-1" href="login">Login</a>
+                    </li>
+                    <?php
+                }else{
+                    ?>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-2 active"  href="#"><?=$username?></a>
+                    </li>
+                    <?php
+                }
+                ?>
             </ul>
             </div>
         </div>
     </nav>
 
     <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="img/hero.jpg">
-        <form class="d-flex tm-search-form">
+        <!-- <form class="d-flex tm-search-form">
             <input class="form-control tm-search-input" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success tm-search-btn" type="submit">
                 <i class="fas fa-search"></i>
             </button>
-        </form>
+        </form> -->
     </div>

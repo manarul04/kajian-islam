@@ -16,6 +16,7 @@
                 $datauser=array(
                   "username"  => $_POST['username'],
                   "password"  => $_POST['password'],
+                  "level"  => $_POST['level'],
                   "id_pengguna"  => $idpengguna
                 );
                 Insert("tb_user",$datauser);
@@ -46,7 +47,8 @@
                 Update("tb_pengguna",$data2,"id_pengguna =".$_POST['id_pengguna']);
                 $dataa2=array(
                   "username"  => $_POST['username'],
-                  "password"  => $_POST['password']
+                  "password"  => $_POST['password'],
+                  "level"  => $_POST['level']
                 );
                 Update("tb_user",$dataa2,"id_pengguna =".$_POST['id_pengguna']);
               }else if($_POST['submit']=="Hapus"){

@@ -3,11 +3,16 @@
               if($_POST['submit']=="Simpan"){
                 $namaFile = $_POST["tanggal"]."-".$_POST["judul"].".jpg";
                 $dirUpload = "img/thumbnail/";
+                if($level=='kontributor'){
+                  $idkontributor=$kontributor;
+                }else{
+                  $idkontributor=$_POST['id_kontributor'];
+                }
                 $data=array(
                   "judul"  => $_POST['judul'],
                   "id_ustad" => $_POST['id_ustad'],
                   "id_kategori" => $_POST['id_kategori'],
-                  "id_kontributor" => $_POST['id_kontributor'],
+                  "id_kontributor" => $idkontributor,
                   "tanggal"  => $_POST['tanggal'],
                   "link"  => $_POST['link'],
                   "deskripsi"  => $_POST['deskripsi'],
@@ -37,7 +42,6 @@
                   "judul"  => $_POST['judul'],
                   "id_ustad" => $_POST['id_ustad'],
                   "id_kategori" => $_POST['id_kategori'],
-                  "id_kontributor" => $_POST['id_kontributor'],
                   "tanggal"  => $_POST['tanggal'],
                   "link"  => $_POST['link'],
                   "deskripsi"  => $_POST['deskripsi'],
@@ -96,7 +100,7 @@
                     <tbody>
                     <?php 
                       $no = 1;
-                      $data = mysqli_query($connect,"SELECT * from v_kajian ORDER BY tanggal DESC");
+                      $data = mysqli_query($connect,"SELECT * from v_kajian $sqlkajian ORDER BY tanggal DESC");
                       while($d = mysqli_fetch_array($data)){
                         ?>
                         <tr>
@@ -237,21 +241,34 @@
                                             </select>
                                           </div>
                                         </div>
+                                        <div <?=$user?>>
+                                          <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Nama Kontributor</label>
+                                            <div class="col-sm-9">
+                                              <select class="select2-single form-control" name="id_kontributor" id="select2Single">
+                                              <option value="">--Pilih Kontributor--</option>
+                                              <?php
+                                                //query menampilkan nama unit kerja ke dalam combobox
+                                                $query2=mysqli_query($connect, "SELECT * FROM v_kontributor");
+                                                while ($data2 = mysqli_fetch_array($query2)) {
+                                                  ?>
+                                                  <option value="<?=$data2['id_kontributor'];?>"<?php if($d['id_kontributor']==$data2['id_kontributor']){echo "selected";} ?>><?php echo $data2['nama'];?></option>
+                                                  <?php
+                                                }
+                                              ?>
+                                              </select>
+                                            </div>
+                                          </div>
+                                        </div>
                                         <div class="form-group row">
-                                          <label class="col-sm-3 col-form-label">Nama Kontributor</label>
+                                          <label class="col-sm-3 col-form-label">Kontributor</label>
                                           <div class="col-sm-9">
-                                            <select class="select2-single form-control" name="id_kontributor" id="select2Single">
-                                            <option value="">--Pilih Kontributor--</option>
-                                            <?php
-                                              //query menampilkan nama unit kerja ke dalam combobox
-                                              $query2=mysqli_query($connect, "SELECT * FROM v_kontributor");
-                                              while ($data2 = mysqli_fetch_array($query2)) {
-                                                ?>
-                                                <option value="<?=$data2['id_kontributor'];?>"<?php if($d['id_kontributor']==$data2['id_kontributor']){echo "selected";} ?>><?php echo $data2['nama'];?></option>
-                                                <?php
-                                              }
+                                            <?php 
+                                              $kontri=$d['id_kontributor'];
+                                              $queryk=mysqli_query($connect, "SELECT * FROM v_kontributor where id_kontributor=$kontri");
+                                              $datak = mysqli_fetch_array($queryk);
                                             ?>
-                                            </select>
+                                            <input type="text" class="form-control" name="id_kontributor" value="<?=$datak['nama']?>" readonly>
                                           </div>
                                         </div>
                                         <div class="form-group row">
@@ -376,6 +393,7 @@
                           </select>
                         </div>
                       </div>
+                      <div <?=$user?>>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Kontributor</label>
                         <div class="col-sm-9">
@@ -393,31 +411,42 @@
                           </select>
                         </div>
                       </div>
-                    <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">Deskripsi</label>
-                      <div class="col-sm-9">
-                        <textarea class="form-control" id="editor1" name="deskripsi"></textarea>
                       </div>
-                    </div>
                       <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Tanggal</label>
+                        <label class="col-sm-3 col-form-label">Kontributor</label>
+                          <div class="col-sm-9">
+                            <?php 
+                              $queryk2=mysqli_query($connect, "SELECT * FROM v_kontributor where id_kontributor=$kontri");
+                              $datak2 = mysqli_fetch_array($queryk2);
+                            ?>
+                            <input type="text" class="form-control" name="id_kontributor" value="<?=$datak2['nama']?>" readonly>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Deskripsi</label>
                         <div class="col-sm-9">
-                          <input type="date" class="form-control" name="tanggal">
+                          <textarea class="form-control" id="editor1" name="deskripsi"></textarea>
                         </div>
                       </div>
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Tanggal</label>
+                          <div class="col-sm-9">
+                            <input type="date" class="form-control" name="tanggal">
+                          </div>
+                        </div>
 
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Link</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" name="link">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Link</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" name="link">
+                          </div>
                         </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Thumbnail</label>
-                        <div class="col-sm-9">
-                          <input type="file" class="form-control" name="thumbnail">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Thumbnail</label>
+                          <div class="col-sm-9">
+                            <input type="file" class="form-control" name="thumbnail">
+                          </div>
                         </div>
-                      </div>
                   </div>
                 </div>
               </div>

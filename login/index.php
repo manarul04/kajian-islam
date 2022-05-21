@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
  
-    $sql = "SELECT * FROM tb_user WHERE username='$username' AND password='$password'";
+    $sql = "SELECT * FROM v_user WHERE username='$username' AND password='$password'";
     $result = mysqli_query($connect, $sql);
     if ($result->num_rows > 0) {
         $row = mysqli_fetch_assoc($result);
@@ -26,7 +26,12 @@ if (isset($_POST['submit'])) {
         
         // header("Location: berhasil_login.php");
         // echo '<script>alert("Berhasil Login.")</script>';
-        echo '<meta content="0; url=../Admin/" http-equiv="refresh">';
+		if($row['level']!="pengguna"){
+			echo '<meta content="0; url=../Admin/" http-equiv="refresh">';
+		}else{
+			echo '<meta content="0; url=../" http-equiv="refresh">';
+		}
+        
     } else {
         echo "<script>alert('Username atau password Anda salah. Silahkan coba lagi!')</script>";
     }
@@ -93,6 +98,12 @@ if (isset($_POST['submit'])) {
 							Login
 						</button> -->
 						<input type="submit" class="login100-form-btn" name="submit" value="Login" />
+					</div>
+					<div class="container-login100-form-btn p-t-10">
+						<!-- <button class="login100-form-btn">
+							Login
+						</button> -->
+						<a href="register.php" style="color:#fff">Register</a>
 					</div>
 
 				

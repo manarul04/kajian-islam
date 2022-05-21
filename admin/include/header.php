@@ -16,13 +16,16 @@ if (isset($_SESSION['username'])) {
     $nama = $data['nama'];
     $alamat = $data['alamat'];
     $email = $data['email'];
-
-    if($level=="Kontributor"){
-        $user="hidden";
-    
-    }else{
+    $foto = $data['foto'];
+    $kontributor = null;
+    $sqlkajian ="";
+    if($level=="admin"){
         $user="";
-        
+    
+    }else if($level=="kontributor"){
+        $user="hidden";
+        $kontributor=$data['id_pengguna'];
+        $sqlkajian = "where id_kontributor=$kontributor";
     }
    
 }else{
@@ -115,7 +118,7 @@ if (isset($_SESSION['username'])) {
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                <img class="img-profile rounded-circle" src="img/boy.png" style="max-width: 60px">
+                <img class="img-profile rounded-circle" src="img/foto/<?=$foto;?>" style="max-width: 60px">
                 <span class="ml-2 d-none d-lg-inline text-white small"><?=$nama;?> | <?=$level;?></span>
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
