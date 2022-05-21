@@ -10,8 +10,14 @@
       case 'kajian';
         include 'halaman/kajian.php';
       break;
-      case 'admin';
-        include 'include/admin/admin.php';
+      case 'ustad';
+        include 'halaman/ustad.php';
+      break;
+      case 'kategori';
+        include 'halaman/kategori.php';
+      break;
+      case 'user';
+        include 'halaman/user.php';
       break;
     }
   }else{

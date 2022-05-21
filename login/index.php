@@ -24,11 +24,9 @@ if (isset($_POST['submit'])) {
         $row = mysqli_fetch_assoc($result);
         $_SESSION['username'] = $row['username'];
         
-        ini_set('session.cookie_lifetime', 86400);
-        ini_set('session.gc_maxlifetime', 86400);
         // header("Location: berhasil_login.php");
         // echo '<script>alert("Berhasil Login.")</script>';
-        echo '<meta content="0; url=../Admin/index.php" http-equiv="refresh">';
+        echo '<meta content="0; url=../Admin/" http-equiv="refresh">';
     } else {
         echo "<script>alert('Username atau password Anda salah. Silahkan coba lagi!')</script>";
     }

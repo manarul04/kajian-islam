@@ -1,8 +1,8 @@
 <?php
 
 include "../config/koneksi.php";
-// error_reporting(0);
- error_reporting(E_ALL);
+error_reporting(0);
+//  error_reporting(E_ALL);
 session_start(['cookie_lifetime' => 86400,]);
 
 if (isset($_SESSION['username'])) {
@@ -45,6 +45,8 @@ if (isset($_SESSION['username'])) {
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="css/ruang-admin.min.css" rel="stylesheet">
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body id="page-top">
@@ -59,7 +61,7 @@ if (isset($_SESSION['username'])) {
       </a>
       <hr class="sidebar-divider my-0">
       <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="index.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -68,19 +70,19 @@ if (isset($_SESSION['username'])) {
         Features
       </div>
       <li class="nav-item">
-        <a class="nav-link" href="?halaman=kajian">
+        <a class="nav-link" href="kajian">
           <i class="fas fa-fw fa-video"></i>
           <span>Kajian</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="?halaman=ustad">
+        <a class="nav-link" href="ustad">
           <i class="fas fa-fw fa-users"></i>
           <span>Ustad</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="?halaman=kategori">
+        <a class="nav-link" href="kategori">
           <i class="fas fa-fw fa-list"></i>
           <span>Kategori</span>
         </a>
@@ -91,7 +93,7 @@ if (isset($_SESSION['username'])) {
           User
         </div>
         <li class="nav-item">
-          <a class="nav-link" href="charts.html">
+          <a class="nav-link" href="user">
             <i class="fas fa-fw fa-user"></i>
             <span>User</span>
           </a>
