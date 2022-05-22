@@ -1,52 +1,46 @@
+    <?php
+        if(isset($_GET['id'])){
+            $id = $_GET['id'];
+            $query = mysqli_query($connect,"SELECT * FROM v_kajian WHERE id_kajian='$id'");
+            $row = mysqli_fetch_array($query);
+            $judul = $row['judul'];
+            $ustad = $row['nama_ustad'];
+            $kategori = $row['kategori'];
+            $deskripsi = $row['deskripsi'];
+            $kontributor = $row['nama'];
+            $link = $row['link'];
+        }
+    ?>
 <div class="container-fluid tm-container-content tm-mt-60">
         <div class="row mb-4">
-            <h2 class="col-12 tm-text-primary">Video title goes here</h2>
+            <h2 class="col-12 tm-text-primary"><?=$judul?></h2>
         </div>
         <div class="row tm-mb-90">            
             <div class="col-xl-8 col-lg-7 col-md-6 col-sm-12">
-                <video autoplay muted loop controls id="tm-video">
-                    <source src="video/hero.mp4" type="video/mp4">
-                </video>  
+            <iframe width="100%" height="600px" src="https://www.youtube.com/embed/<?=$link?>?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <!-- <iframe src="<?=$link?>?rel=0&amp;controls=0&amp;showinfo=0&amp;autoplay=1" frameborder="0" allow="autoplay; encrypted-media"></iframe> -->
             </div>
             <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
                 <div class="tm-bg-gray tm-video-details">
-                    <p class="mb-4">
-                        Aliquam varius posuere nunc, nec imperdiet neque condimentum at. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Please support us by contributing <a href="https://paypal.me/templatemo" target="_parent" rel="sponsored">a small donation</a> via PayPal.
-                    </p>
-                    <div class="text-center mb-5">
-                        <a href="#" class="btn btn-primary tm-btn-big">Download</a>
-                    </div>                    
+                                      
                     <div class="mb-4 d-flex flex-wrap">
                         <div class="mr-4 mb-2">
-                            <span class="tm-text-gray-dark">Resolution: </span><span class="tm-text-primary">1920x1080</span>
+                            <span class="tm-text-gray-dark">Ustad: </span><span class="tm-text-primary"><?=$ustad?></span>
                         </div>
                         <div class="mr-4 mb-2">
-                            <span class="tm-text-gray-dark">Format: </span><span class="tm-text-primary">MP4</span>
-                        </div>
-                        <div>
-                            <span class="tm-text-gray-dark">Duration: </span><span class="tm-text-primary">00:00:20</span>
+                            <span class="tm-text-gray-dark">Kontributor: </span><span class="tm-text-primary"><?=$kontributor?></span>
                         </div>
                     </div>
                     <div class="mb-4">
-                        <h3 class="tm-text-gray-dark mb-3">License</h3>
-                        <p>Free for both personal and commercial use. No need to pay anything. No need to make any attribution.</p>
-                    </div>
-                    <div>
-                        <h3 class="tm-text-gray-dark mb-3">Tags</h3>
-                        <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Cloud</a>
-                        <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Bluesky</a>
-                        <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Nature</a>
-                        <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Background</a>
-                        <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Timelapse</a>
-                        <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Night</a>
-                        <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Real Estate</a>
+                        <h3 class="tm-text-gray-dark mb-3">Deskripsi</h3>
+                        <p><?=$deskripsi?></p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row mb-4">
             <h2 class="col-12 tm-text-primary">
-                Related Videos
+                Video Terkait
             </h2>
         </div>
         <div class="row mb-3 tm-gallery">

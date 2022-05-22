@@ -51,7 +51,7 @@ https://templatemo.com/tm-556-catalog-z
     </div>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/kajian-islam">
                 <!-- <i class="fas fa-film mr-2"></i> -->
                 <img src="img/logo.png" width="100px">
             </a>
@@ -66,9 +66,7 @@ https://templatemo.com/tm-556-catalog-z
                 <li class="nav-item">
                     <a class="nav-link nav-link-1 <?php if($_GET['halaman']=="about"){echo 'active';}?>" href="about">About</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-1 <?php if($_GET['halaman']=="profil"){echo 'active';}?>" href="profil">Profil</a>
-                </li>
+                
                 
                 <?php if($loginhdn!='hidden'){
                     ?>
@@ -78,6 +76,9 @@ https://templatemo.com/tm-556-catalog-z
                     <?php
                 }else{
                     ?>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-1 <?php if($_GET['halaman']=="profil"){echo 'active';}?>" href="profil">Profil</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link nav-link-2 active"  href="#"><?=$username?></a>
                     </li>

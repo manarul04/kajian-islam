@@ -183,6 +183,10 @@
                                                 <td><?=$d['kategori'];?></td>
                                               </tr>
                                               <tr>
+                                                <td scope="row">id video youtube</td>
+                                                <td><?=$d['link'];?></td>
+                                              </tr>
+                                              <tr>
                                                 <td scope="row">Deskripsi</td>
                                                 <td><textarea class="form-control" id="editor1" onclick="auto_grow(this)" name="resume"><?=$d['deskripsi']?></textarea></td>
                                               </tr>
@@ -260,6 +264,7 @@
                                             </div>
                                           </div>
                                         </div>
+                                        <div <?php if($level=="admin"){echo "hidden";}?>>
                                         <div class="form-group row">
                                           <label class="col-sm-3 col-form-label">Kontributor</label>
                                           <div class="col-sm-9">
@@ -270,6 +275,7 @@
                                             ?>
                                             <input type="text" class="form-control" name="id_kontributor" value="<?=$datak['nama']?>" readonly>
                                           </div>
+                                        </div>
                                         </div>
                                         <div class="form-group row">
                                           <label class="col-sm-3 col-form-label">Kategori</label>
@@ -289,7 +295,7 @@
                                           </div>
                                         </div>
                                         <div class="form-group row">
-                                          <label class="col-sm-3 col-form-label">Link</label>
+                                          <label class="col-sm-3 col-form-label">ID video youtube</label>
                                           <div class="col-sm-9">
                                             <input type="text" class="form-control" name="link" value="<?=$d['link']?>">
                                           </div>
@@ -412,6 +418,7 @@
                         </div>
                       </div>
                       </div>
+                      <div <?php if($level=="admin"){echo "hidden";}?>>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Kontributor</label>
                           <div class="col-sm-9">
@@ -421,6 +428,7 @@
                             ?>
                             <input type="text" class="form-control" name="id_kontributor" value="<?=$datak2['nama']?>" readonly>
                           </div>
+                      </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Deskripsi</label>
@@ -436,7 +444,7 @@
                         </div>
 
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Link</label>
+                          <label class="col-sm-3 col-form-label">id video youtube</label>
                           <div class="col-sm-9">
                             <input type="text" class="form-control" name="link">
                           </div>

@@ -13,8 +13,11 @@
       case 'profil';
         include 'halaman/profil.php';
       break;
+      case 'login';
+        header('Location: ../login/index.php');
+      break;
       case 'detail';
-        header('Location: halaman/detail.php');
+      include 'halaman/detail.php';
       break;
     }
   }else{

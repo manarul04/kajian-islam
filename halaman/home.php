@@ -21,7 +21,7 @@
                     <img src="admin/img/thumbnail/<?=$d['thumbnail'];?>" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2><?=$d['nama_ustad'];?></h2>
-                        <a href="photo-detail.html">View more</a>
+                        <a href="?halaman=detail&id=<?=$d['id_kajian'];?>">View more</a>
                     </figcaption>                    
                 </figure>
                 <span class="tm-text-primary"><i class="fa fa-user"></i>  <?=$d['nama_ustad'];?> | </span>
