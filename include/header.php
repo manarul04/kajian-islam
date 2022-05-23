@@ -80,7 +80,7 @@ https://templatemo.com/tm-556-catalog-z
                         <a class="nav-link nav-link-1 <?php if($_GET['halaman']=="profil"){echo 'active';}?>" href="profil">Profil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-2 active"  href="#"><?=$username?></a>
+                        <a class="nav-link nav-link-2 active"  href="admin/logout.php">Logout</a>
                     </li>
                     <?php
                 }
