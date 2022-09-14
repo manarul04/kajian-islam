@@ -1,26 +1,8 @@
-<?php
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-    if ($_POST['favorit'] == 'Menambahkan') {
-        $data = array(
-            "id_pengguna"  => $_POST['id_pengguna'],
-            "id_kajian"    => $_POST['id_kajian'],
-        );
-        Insert("tb_favorit", $data);
-    }
-
-    if ($_POST['favorit'] == 'Menghapus') {
-        $idfavorit = cekIdFavorite($_POST['id_kajian'], $_POST['id_pengguna']);
-        if ($idfavorit) {
-            Delete("tb_favorit", "WHERE id_favorit = '" . $idfavorit . "'");
-        }
-    }
-}
-?>
 <div class="container-fluid tm-container-content tm-mt-60">
     <div class="row mb-4">
         <h2 class="col-6 tm-text-primary">
-            Video Terbaru
+            Video Favorit
         </h2>
         <div class="col-6 d-flex justify-content-end align-items-center">
             <!-- <form action="" class="tm-text-primary">
@@ -31,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <div class="row tm-mb-90 tm-gallery">
         <?php
         $no = 1;
-        $data = mysqli_query($connect, "SELECT * from v_kajian $sqlkajian ORDER BY tanggal DESC");
+        $data = mysqli_query($connect, "SELECT * from v_favorit where id_pengguna = '$id' ORDER BY tanggal DESC");
         while ($d = mysqli_fetch_array($data)) {
         ?>
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
@@ -93,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             </div>
         <?php
         }
+        
         ?>
     </div> <!-- row -->
     <!-- <div class="row tm-mb-90">

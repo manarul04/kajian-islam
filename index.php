@@ -13,6 +13,12 @@
       case 'profil';
         include 'halaman/profil.php';
       break;
+      case 'favorit';
+        include 'halaman/favorit.php';
+      break;
+      case 'jadwal';
+        include 'halaman/jadwal.php';
+      break;
       case 'login';
         header('Location: ../login/index.php');
       break;

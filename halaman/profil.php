@@ -10,7 +10,14 @@
         </div>
         <div class="row tm-mb-74 tm-row-1640">            
             <div class="col-lg-5 col-md-6 col-12 mb-3">
-                <img src="admin/img/foto/<?=$d['foto'];?>" alt="Image" class="img-fluid" style="padding:50px">
+              <?php
+                if($d['foto']){
+                  $foto = 'admin/img/foto/'.$d['foto'];
+                }else{
+                  $foto='';
+                }
+              ?>
+                <img srcset="<?=$foto?>" src="img/foto.png" alt="Image" class="img-fluid" style="padding:50px">
             </div>
             <div class="col-lg-7 col-md-6 col-12">
                 <div class="tm-about-img-text">

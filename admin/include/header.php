@@ -8,27 +8,25 @@ session_start(['cookie_lifetime' => 86400,]);
 if (isset($_SESSION['username'])) {
   // echo '<meta content="0; url=profil/" http-equiv="refresh">';
   $username = $_SESSION['username'];
-  
-    $query = mysqli_query($connect, "SELECT * FROM v_user WHERE username='$username'");
-    $data = mysqli_fetch_array($query);
-    $id = $data['id_pengguna'];
-    $level = $data['level'];
-    $nama = $data['nama'];
-    $alamat = $data['alamat'];
-    $email = $data['email'];
-    $foto = $data['foto'];
-    $kontributor = null;
-    $sqlkajian ="";
-    if($level=="admin"){
-        $user="";
-    
-    }else if($level=="kontributor"){
-        $user="hidden";
-        $kontributor=$data['id_pengguna'];
-        $sqlkajian = "where id_kontributor=$kontributor";
-    }
-   
-}else{
+
+  $query = mysqli_query($connect, "SELECT * FROM v_user WHERE username='$username'");
+  $data = mysqli_fetch_array($query);
+  $id = $data['id_pengguna'];
+  $level = $data['level'];
+  $nama = $data['nama'];
+  $alamat = $data['alamat'];
+  $email = $data['email'];
+  $foto = $data['foto'];
+  $kontributor = null;
+  $sqlkajian = "";
+  if ($level == "admin") {
+    $user = "";
+  } else if ($level == "kontributor") {
+    $user = "hidden";
+    $kontributor = $data['id_pengguna'];
+    $sqlkajian = "where id_kontributor=$kontributor";
+  }
+} else {
   echo '<script>alert("Login Terlebih Dahulu.")</script>';
   echo '<meta http-equiv="refresh" content="0;url=../login"/> ';
 }
@@ -85,12 +83,18 @@ if (isset($_SESSION['username'])) {
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="jadwal">
+          <i class="fas fa-fw fa-users"></i>
+          <span>Jadwal</span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="kategori">
           <i class="fas fa-fw fa-list"></i>
           <span>Kategori</span>
         </a>
       </li>
-      <div <?=$user;?>>
+      <div <?= $user; ?>>
         <hr class="sidebar-divider">
         <div class="sidebar-heading">
           User
@@ -114,15 +118,14 @@ if (isset($_SESSION['username'])) {
             <i class="fa fa-bars"></i>
           </button>
           <ul class="navbar-nav ml-auto">
-            
+
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <img class="img-profile rounded-circle" src="img/foto/<?=$foto;?>" style="max-width: 60px">
-                <span class="ml-2 d-none d-lg-inline text-white small"><?=$nama;?> | <?=$level;?></span>
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img class="img-profile rounded-circle" src="img/foto/<?= $foto; ?>" style="max-width: 60px">
+                <span class="ml-2 d-none d-lg-inline text-white small"><?= $nama; ?> | <?= $level; ?></span>
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                
+
                 <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
@@ -132,4 +135,3 @@ if (isset($_SESSION['username'])) {
           </ul>
         </nav>
         <!-- Topbar -->
-          

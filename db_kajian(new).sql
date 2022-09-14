@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 22, 2022 at 04:38 AM
+-- Generation Time: Sep 14, 2022 at 02:11 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -20,6 +20,50 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_kajian`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_favorit`
+--
+
+CREATE TABLE `tb_favorit` (
+  `id_favorit` int(11) NOT NULL,
+  `id_pengguna` int(11) NOT NULL,
+  `id_kajian` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_favorit`
+--
+
+INSERT INTO `tb_favorit` (`id_favorit`, `id_pengguna`, `id_kajian`) VALUES
+(7, 4, 1),
+(8, 5, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_jadwal`
+--
+
+CREATE TABLE `tb_jadwal` (
+  `id_jadwal` int(11) NOT NULL,
+  `nama_kajian` text NOT NULL,
+  `tanggal` datetime NOT NULL,
+  `id_kontributor` int(11) NOT NULL,
+  `lokasi` text NOT NULL,
+  `foto` text NOT NULL,
+  `nama_ustad` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_jadwal`
+--
+
+INSERT INTO `tb_jadwal` (`id_jadwal`, `nama_kajian`, `tanggal`, `id_kontributor`, `lokasi`, `foto`, `nama_ustad`) VALUES
+(1, 'UMK Bersholawat 2022', '2022-09-07 14:49:36', 1, 'Masjid UMK', 'JADWAL-UMK Bersholawat 2022.jpg', 'Habib Ali'),
+(2, 'IAIN Bersolawat', '2022-09-07 20:17:00', 0, 'Aula IAIN Kudus', 'JADWAL-IAIN Bersolawat.jpg', 'Gus Miftah');
 
 -- --------------------------------------------------------
 
@@ -142,6 +186,29 @@ INSERT INTO `tb_ustad` (`id_ustad`, `nama_ustad`, `deskripsi`, `foto`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `v_favorit`
+-- (See below for the actual view)
+--
+CREATE TABLE `v_favorit` (
+`id_favorit` int(11)
+,`id_kajian` int(11)
+,`id_pengguna` int(11)
+,`judul` text
+,`id_kategori` text
+,`kategori` text
+,`id_ustad` int(11)
+,`nama_ustad` text
+,`id_kontributor` int(11)
+,`nama` text
+,`tanggal` date
+,`deskripsi` text
+,`thumbnail` text
+,`link` text
+);
+
+-- --------------------------------------------------------
+
+--
 -- Stand-in structure for view `v_kajian`
 -- (See below for the actual view)
 --
@@ -180,6 +247,24 @@ CREATE TABLE `v_kontributor` (
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `v_pengguna`
+-- (See below for the actual view)
+--
+CREATE TABLE `v_pengguna` (
+`id` int(11)
+,`username` varchar(50)
+,`password` varchar(50)
+,`level` varchar(50)
+,`id_pengguna` int(11)
+,`nama` text
+,`alamat` text
+,`email` text
+,`foto` text
+);
+
+-- --------------------------------------------------------
+
+--
 -- Stand-in structure for view `v_user`
 -- (See below for the actual view)
 --
@@ -194,6 +279,15 @@ CREATE TABLE `v_user` (
 ,`email` text
 ,`foto` text
 );
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `v_favorit`
+--
+DROP TABLE IF EXISTS `v_favorit`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_favorit`  AS SELECT `tb_favorit`.`id_favorit` AS `id_favorit`, `tb_favorit`.`id_kajian` AS `id_kajian`, `tb_favorit`.`id_pengguna` AS `id_pengguna`, `v_kajian`.`judul` AS `judul`, `v_kajian`.`id_kategori` AS `id_kategori`, `v_kajian`.`kategori` AS `kategori`, `v_kajian`.`id_ustad` AS `id_ustad`, `v_kajian`.`nama_ustad` AS `nama_ustad`, `v_kajian`.`id_kontributor` AS `id_kontributor`, `v_kajian`.`nama` AS `nama`, `v_kajian`.`tanggal` AS `tanggal`, `v_kajian`.`deskripsi` AS `deskripsi`, `v_kajian`.`thumbnail` AS `thumbnail`, `v_kajian`.`link` AS `link` FROM (`tb_favorit` join `v_kajian` on(`tb_favorit`.`id_kajian` = `v_kajian`.`id_kajian`))  ;
 
 -- --------------------------------------------------------
 
@@ -216,6 +310,15 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
+-- Structure for view `v_pengguna`
+--
+DROP TABLE IF EXISTS `v_pengguna`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_pengguna`  AS SELECT `v_user`.`id` AS `id`, `v_user`.`username` AS `username`, `v_user`.`password` AS `password`, `v_user`.`level` AS `level`, `v_user`.`id_pengguna` AS `id_pengguna`, `v_user`.`nama` AS `nama`, `v_user`.`alamat` AS `alamat`, `v_user`.`email` AS `email`, `v_user`.`foto` AS `foto` FROM `v_user` WHERE `v_user`.`level` = 'pengguna''pengguna'  ;
+
+-- --------------------------------------------------------
+
+--
 -- Structure for view `v_user`
 --
 DROP TABLE IF EXISTS `v_user`;
@@ -225,6 +328,18 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `tb_favorit`
+--
+ALTER TABLE `tb_favorit`
+  ADD PRIMARY KEY (`id_favorit`);
+
+--
+-- Indexes for table `tb_jadwal`
+--
+ALTER TABLE `tb_jadwal`
+  ADD PRIMARY KEY (`id_jadwal`);
 
 --
 -- Indexes for table `tb_kajian`
@@ -260,6 +375,18 @@ ALTER TABLE `tb_ustad`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `tb_favorit`
+--
+ALTER TABLE `tb_favorit`
+  MODIFY `id_favorit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `tb_jadwal`
+--
+ALTER TABLE `tb_jadwal`
+  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_kajian`

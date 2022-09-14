@@ -70,7 +70,7 @@ function produksi($bulan, $tahun){
 
 function produksiTahunan(){
     global $connect;
-    $tahun= date(Y);
+    $tahun= date('Y');
     $sql2 = mysqli_query($connect,"SELECT COUNT(*) AS jml from video where YEAR(tanggal)='$tahun'");
     $row2= mysqli_fetch_array($sql2);
     $total = $row2["jml"];
@@ -78,8 +78,8 @@ function produksiTahunan(){
 }
 function produksiBulanan(){
     global $connect;
-    $tahun= date(Y);
-    $bulan= date(m);
+    $tahun= date('Y');
+    $bulan= date('m');
     $sql = mysqli_query($connect,"SELECT COUNT(*) AS jml from video where YEAR(tanggal)='$tahun' AND MONTH(tanggal)='$bulan'");
     $row= mysqli_fetch_array($sql);
     $totalb = $row["jml"];
@@ -87,9 +87,9 @@ function produksiBulanan(){
 }
 function produksiHarian(){
     global $connect;
-    $tahun= date(Y);
-    $bulan= date(m);
-    $tanggal= date(d);
+    $tahun= date('Y');
+    $bulan= date('m');
+    $tanggal= date('d');
     $sql = mysqli_query($connect,"SELECT COUNT(*) AS jml from video where YEAR(tanggal)='$tahun' AND MONTH(tanggal)='$bulan' AND DATE(tanggal)='$tanggal'");
     $row= mysqli_fetch_array($sql);
     $totalb = $row["jml"];
@@ -114,22 +114,22 @@ function dataDashboard($kategori,$periode,$waktu){
         $kunjungan="";
     }
     if($periode=='Tahunan'){
-        $tahun= date(Y);
+        $tahun= date('Y');
         $sql = mysqli_query($connect,"SELECT COUNT(*) AS jml from $kategori where $kunjungan YEAR(tanggal)='$waktu'");
         $row= mysqli_fetch_array($sql);
         $total = $row["jml"];
         echo $total;
     }else if($periode=='Bulanan'){
-        $tahun= date(Y);
-        $bulan= date(m);
+        $tahun= date('Y');
+        $bulan= date('m');
         $sql2 = mysqli_query($connect,"SELECT COUNT(*) AS jml from $kategori where $kunjungan YEAR(tanggal)='$tahun' AND MONTH(tanggal)='$waktu'");
         $row2= mysqli_fetch_array($sql2);
         $total2 = $row2["jml"];
         echo $total2;
     }else{
-        $tahun= date(Y);
-        $bulan= date(m);
-        $tanggal= date(d);
+        $tahun= date('Y');
+        $bulan= date('m');
+        $tanggal= date('d');
         $sql3 = mysqli_query($connect,"SELECT COUNT(*) AS jml from $kategori where $kunjungan YEAR(tanggal)='$tahun' AND MONTH(tanggal)='$bulan' AND DATE(tanggal)='$waktu'");
         $row3= mysqli_fetch_array($sql3);
         $total3 = $row3["jml"];
@@ -137,99 +137,25 @@ function dataDashboard($kategori,$periode,$waktu){
     }
 }
 
-function totalreporter($kategori, $bulan, $tahun,$idreporter){
+function capaian($kategori,$id_kontributor,$id){
     global $connect;
-    if($kategori=="video"){
-        $sql21 = mysqli_query($connect,"SELECT COUNT(MONTH(tanggal))AS jml, MONTH(tanggal) AS Bulan FROM berita WHERE video='1' AND MONTH(tanggal)='$bulan' AND YEAR(tanggal)='$tahun' AND id_reporter='$idreporter'");
-    }else{
-        $sql21 = mysqli_query($connect,"SELECT COUNT(MONTH(tanggal))AS jml, MONTH(tanggal) AS Bulan FROM $kategori WHERE MONTH(tanggal)='$bulan' AND YEAR(tanggal)='$tahun' AND id_reporter='$idreporter'");
-    }
+        $sql21 = mysqli_query($connect,"SELECT COUNT(*)AS jml FROM $kategori WHERE  $id='$id_kontributor'");
+    
     
     $row21= mysqli_fetch_array($sql21);
     echo $row21["jml"];
 }
-function laporanredaksitotal($kategori,$bulan,$tahun){
+function dashboardTotal($kategori,$bulantahun){
     global $connect;
-    if($kategori=="video"){
-        $sql21 = mysqli_query($connect,"SELECT COUNT(*) AS jml from berita where Year(tanggal)=Year($tahun) AND Month(tanggal)= Month($bulan) AND video = 1");
-    }else{
-        $sql21 = mysqli_query($connect,"SELECT COUNT(*) AS jml from $kategori where Year(tanggal)=Year($tahun) AND Month(tanggal)= Month($bulan)");
-    }
-    
-    $row21= mysqli_fetch_array($sql21);
-    echo $row21["jml"];
-    
-}
-function capaian($kategori,$id_reporter,$bulan){
-    global $connect;
-    if($kategori=="video"){
-        $sql21 = mysqli_query($connect,"SELECT COUNT(MONTH(tanggal))AS jml, MONTH(tanggal) AS Bulan FROM berita WHERE video='1' AND MONTH(tanggal)=$bulan AND YEAR(tanggal)=YEAR(CURDATE()) AND id_reporter='$id_reporter'");
-    }else{
-        $sql21 = mysqli_query($connect,"SELECT COUNT(MONTH(tanggal))AS jml, MONTH(tanggal) AS Bulan FROM $kategori WHERE MONTH(tanggal)=$bulan AND YEAR(tanggal)=YEAR(CURDATE()) AND id_reporter='$id_reporter'");
-    }
-    
-    $row21= mysqli_fetch_array($sql21);
-    echo $row21["jml"];
-}
-function dashboardRedaksi($kategori,$bulantahun){
-    global $connect;
-    if($kategori=="video"){
-        $sql21 = mysqli_query($connect,"SELECT COUNT(*) AS jml FROM berita where video='1' AND tanggal LIKE '$bulantahun%'");
+    if($bulantahun==""){
+        $sql21 = mysqli_query($connect,"SELECT COUNT(*) AS jml FROM $kategori");
     }else{
         $sql21 = mysqli_query($connect,"SELECT COUNT(*) AS jml FROM $kategori where tanggal LIKE '$bulantahun%'");
     }
-    
     $row21= mysqli_fetch_array($sql21);
     echo $row21["jml"];
 }
-function dashboardRedaksiPersen($kategori,$bulantahun){
-    global $connect;
-    if($kategori=="video"){
-        $sql21 = mysqli_query($connect,"SELECT COUNT(*) AS jml FROM berita where video='1' AND tanggal LIKE '$bulantahun%'");
-        $sql2 = mysqli_query($connect,"SELECT COUNT(*) AS jml FROM berita where video='1' AND WHERE MONTH(tanggal) = MONTH(SUBDATE(CURDATE(), INTERVAL 1 MONTH));");
-    }else{
-        $sql21 = mysqli_query($connect,"SELECT COUNT(*) AS jml FROM $kategori where tanggal LIKE '$bulantahun%'");
-        $sql2 = mysqli_query($connect,"SELECT COUNT(*) AS jml FROM $kategori WHERE MONTH(tanggal) = MONTH(SUBDATE(CURDATE(), INTERVAL 1 MONTH));");
-    }
-    
-    $row21= mysqli_fetch_array($sql21);
-    $total = $row21["jml"];
-    
-    
-    $row2= mysqli_fetch_array($sql2);
-    $totalkemarin = $row2["jml"];
-    if($totalkemarin>0){
-        $ttl = $total-$totalkemarin;
-        $persen =$ttl/$totalkemarin*100;
-        if($persen>=0){
-            $sts="Naik";
-            $txt="success";
-            $arrow="up";
-        }else{
-            $sts="Turun";
-            $txt="danger";
-            $arrow="down";
-        }
-    }else{
-         $sts="Naik";
-         $txt="success";
-         $arrow="up";
-         $persen="";
-     }
-     echo '<span class="text-'.$txt.' mr-2"><i class="fa fa-arrow-'.$arrow.'"></i>'.$sts.' '.$persen."%".'</span>';;
-     
-}
-function laporanRedaksi($kategori,$id_reporter,$tanggal){
-    global $connect;
-    if($kategori=="video"){
-        $sql21 = mysqli_query($connect,"SELECT COUNT(MONTH(tanggal))AS jml, MONTH(tanggal) AS Bulan FROM berita WHERE MONTH(tanggal)=MONTH('$tanggal') AND YEAR(tanggal)=YEAR('$tanggal') AND id_reporter='$id_reporter' AND video='1'");
-    }else{
-        $sql21 = mysqli_query($connect,"SELECT COUNT(MONTH(tanggal))AS jml, MONTH(tanggal) AS Bulan FROM $kategori WHERE MONTH(tanggal)=MONTH('$tanggal') AND YEAR(tanggal)=YEAR('$tanggal') AND id_reporter='$id_reporter'");
-    }
-    
-    $row21= mysqli_fetch_array($sql21);
-    echo $row21["jml"];
-}
+
 function Cekada($table,$nama,$value){
     global $connect;
     // mengambil data barang dengan kode paling besar
@@ -317,40 +243,6 @@ function Kemarin(){
 function isset_file($name) {
     return (isset($_FILES[$name]) && $_FILES[$name]['error'] != UPLOAD_ERR_NO_FILE);
 }
-
-function Nomorwa($nomor_wa) {
-    $nomor="";
-    if(substr($nomor_wa,0,2)=="08"){
-        $nomor="62".substr($nomor_wa,1);
-       
-    }else{
-        $nomor=$nomor_wa;
-    }
-    return $nomor;
-}
-
-function SendWa($nomor,$pesan){
-    $data = [
-        'phone' => $nomor, // Receivers phone
-        'body' => $pesan, // Message
-    ];
-    $json = json_encode($data); // Encode data to JSON
-    // URL for request POST /message
-    $token = '92gp50ymkc5dq76d';
-    $instanceId = '310426';
-    $url = 'https://api.chat-api.com/instance'.$instanceId.'/message?token='.$token;
-    // Make a POST request
-    $options = stream_context_create(['http' => [
-            'method'  => 'POST',
-            'header'  => 'Content-type: application/json',
-            'content' => $json
-        ]
-    ]);
-    // Send a request
-    $result = file_get_contents($url, false, $options);
-
-}
-
 function jam($jam){
    echo substr($jam,11,5);
 }
@@ -383,141 +275,29 @@ function NamaBulan($bulan){
         break;
         default : $bulan="DESEMBER";
     }
-    
-    
-    
-    // variabel pecahkan 0 = tanggal
-    // variabel pecahkan 1 = bulan
-    // variabel pecahkan 2 = tahun
-     
     return  $bulan;
 }
 
-//AKuntansi
-function sumTransaksi($periode,$tanggal,$kategori){
+function cekFavorite($idkajian,$idpengguna)
+{
     global $connect;
-    if($periode=="Harian"){
-        $sql21 = mysqli_query($connect,"SELECT SUM(nominal) AS jml FROM `transaksi` WHERE kategori_transaksi='$kategori' AND MONTH(tanggal)=MONTH('$tanggal') AND DATE(tanggal)=DATE('$tanggal') AND YEAR(tanggal)=YEAR('$tanggal')");
-    }elseif($periode=="Bulanan"){
-        $sql21 = mysqli_query($connect,"SELECT SUM(nominal) AS jml FROM `transaksi` WHERE kategori_transaksi='$kategori' AND MONTH(tanggal)=MONTH('$tanggal') AND YEAR(tanggal)=YEAR('$tanggal')");
-    }elseif($periode=="Tahunan"){
-        $sql21 = mysqli_query($connect,"SELECT SUM(nominal) AS jml FROM `transaksi` WHERE kategori_transaksi='$kategori' AND YEAR(tanggal)=YEAR('$tanggal')");
-    }
-    
+    $sql21 = mysqli_query($connect,"SELECT COUNT(*)AS jml FROM tb_favorit WHERE id_pengguna='$idpengguna' AND id_kajian='$idkajian'");
     $row21= mysqli_fetch_array($sql21);
-    return number_format($row21["jml"]);
-}
-function kompres1($maxDim,$file_name,$folder){
-    list($width, $height, $type, $attr) = getimagesize( $file_name );
-    if ( $width > $maxDim || $height > $maxDim ) {
-        $target_filename = $file_name;
-        $ratio = $width/$height;
-        if( $ratio > 1) {
-            $new_width = $maxDim;
-            $new_height = $maxDim/$ratio;
-        } else {
-            $new_width = $maxDim*$ratio;
-            $new_height = $maxDim;
-        }
-        $src = imagecreatefromstring( file_get_contents( $file_name ) );
-        $dst = imagecreatetruecolor( $new_width, $new_height );
-        imagecopyresampled( $dst, $src, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
-        imagedestroy( $src );
-        imagepng( $dst, $target_filename ); // adjust format as needed
-        imagedestroy( $dst );
-        copy($file_name, $folder);
-        } 
+    if($row21["jml"]<1){
+        return false;
+    }else{
+        return true;
     }
-function kompres($size,$tmp,$location){
-    if($size<500000){
-        copy($tmp,$location);  
-     }elseif($size<700000){
-          compressImage($tmp,$location,70); 
-      }elseif($size<1500000){
-          compressImage($tmp,$location,50); 
-      }elseif($size<3000000){
-          compressImage($tmp,$location,40); 
-      }elseif($size<4500000){
-          compressImage($tmp,$location,30); 
-      }else{
-         // Compress Image
-          compressImage($tmp,$location,20); 
-      }
-}
-    
-// Compress image
-function compressImage($source, $destination, $quality) {
-
-    $info = getimagesize($source);
-    
-    if ($info['mime'] == 'image/jpeg') 
-      $image = imagecreatefromjpeg($source);
-    
-    elseif ($info['mime'] == 'image/gif') 
-      $image = imagecreatefromgif($source);
-    
-    elseif ($info['mime'] == 'image/png') 
-      $image = imagecreatefrompng($source);
-    
-    imagejpeg($image, $destination, $quality);
-
 }
 
-//Akuntansi
-function neracasaldo($akun, $awal, $akhir) {
+function cekIdFavorite($idkajian,$idpengguna)
+{
     global $connect;
-    $sql = mysqli_query($connect,"SELECT SUM(nominal)AS totaldebit FROM `tb_transaksi` WHERE debit='$akun' AND tanggal BETWEEN '$awal' AND '$akhir'");
-    $row= mysqli_fetch_array($sql);
-    $debit = $row["totaldebit"];
-    
-    $sql2 = mysqli_query($connect,"SELECT SUM(nominal)AS totalkredit FROM `tb_transaksi` WHERE kredit='$akun' AND tanggal BETWEEN '$awal' AND '$akhir'");
-    $row2= mysqli_fetch_array($sql2);
-    $kredit = $row2["totalkredit"];
-    
-    $total=$debit-$kredit;
-    
-    return $total;
-}
-
-function posisikeuangan($akun, $tanggal) {
-    global $connect;
-    $sql = mysqli_query($connect,"SELECT SUM(nominal)AS totaldebit FROM `tb_transaksi` WHERE debit like '$akun%' AND tanggal <= '$tanggal' ");
-    $row= mysqli_fetch_array($sql);
-    $debit = $row["totaldebit"];
-    
-    $sql2 = mysqli_query($connect,"SELECT SUM(nominal)AS totalkredit FROM `tb_transaksi` WHERE kredit like '$akun%' AND tanggal <= '$tanggal'");
-    $row2= mysqli_fetch_array($sql2);
-    $kredit = $row2["totalkredit"];
-    
-    $total=$debit-$kredit;
-    if($total<1){
-        $total=$total*-1;
+    $favoritModel = mysqli_query($connect,"SELECT COUNT(*)AS jml,id_favorit FROM tb_favorit WHERE id_pengguna='$idpengguna' AND id_kajian='$idkajian'");
+    $favoritData= mysqli_fetch_array($favoritModel);
+    if($favoritData["jml"]<1){
+        return false;
+    }else{
+        return $favoritData["id_favorit"];
     }
-    return $total;
 }
-
-function labarugi($akun, $awal, $akhir){
-    global $connect;
-    $sql = mysqli_query($connect,"SELECT SUM(nominal)AS totaldebit FROM `tb_transaksi` WHERE debit like '$akun%' AND tanggal BETWEEN '$awal' AND '$akhir'");
-    $row= mysqli_fetch_array($sql);
-    $debit = $row["totaldebit"];
-    
-    $sql2 = mysqli_query($connect,"SELECT SUM(nominal)AS totalkredit FROM `tb_transaksi` WHERE kredit like '$akun%' AND tanggal BETWEEN '$awal' AND '$akhir'");
-    $row2= mysqli_fetch_array($sql2);
-    $kredit = $row2["totalkredit"];
-    
-    $total=$debit-$kredit;
-    if($total<1){
-        $total=$total*-1;
-    }
-    return $total;
-}
-
-function labarugiBulan($bulan){
-    $awal=date(Y)."-".$bulan."-1";
-    $akhir=date(Y)."-".$bulan."-31";
-    $labarugi=labarugi(4,$awal,$akhir)-labarugi(6,$awal,$akhir);
-    return $labarugi;
-}
-
-?>

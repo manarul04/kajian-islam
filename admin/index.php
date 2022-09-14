@@ -13,6 +13,9 @@
       case 'ustad';
         include 'halaman/ustad.php';
       break;
+      case 'jadwal';
+        include 'halaman/jadwal.php';
+      break;
       case 'kategori';
         include 'halaman/kategori.php';
       break;
